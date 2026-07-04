@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love! ❤️</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght=700&family=Poppins:wght=300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        :root {
+            --bg-color: #0c0914;
+            --heart-color: #ff4d6d;
+            --matrix-pink: #ff758f;
+            --neon-glow: #ff0055;
+            --envelope-crimson: #d90429;
+            
+            --strawberry-frosting-deep: #ff85a1;
+            --strawberry-frosting-light: #ffb3c1;
+            --cream-glaze: #fff0f3;
+            --gold-pearl: #ffd700;
+            --cake-shadow: rgba(0, 0, 0, 0.45);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+            transition: opacity 3s ease-in-out; /* Extended slow fade duration (15s - 12s = 3s fade) */
+        }
+
+        .fade-out-page {
+            opacity: 0 !important;
+        }
+
+        /* --- STAGE 1: Pink Binary Intro --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050510;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease;
+        }
+
+        #binary-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.45;
+        }
+
+        #countdown {
+            font-size: 5.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 25px var(--neon-glow);
+            z-index: 10;
+            text-align: center;
+            max-width: 90%;
+            line-height: 1.2;
+        }
+
+        /* --- STAGE 2: Envelope Stage --- */
+        #envelope-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a052e 0%, #050512 100%);
+            z-index: 9998;
+            display: none; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+            overflow: hidden;
+            transition: opacity 0.8s ease;
+        }
+
+        .bg-heart {
+            position: absolute;
+            color: rgba(217, 4, 41, 0.2);
+            font-size: 1.5rem;
+            animation: floatUp 4s linear infinite;
+            bottom: -50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 360px;
+            height: 240px;
+            z-index: 5;
+            cursor: pointer;
+            margin-top: 220px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(43, 8, 48, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(217, 4, 41, 0.15);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .envelope-container:hover .envelope-wrapper {
+            transform: scale(1.04) translateY(-5px);
+        }
+
+        .envelope-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(37, 9, 43, 0.95), rgba(15, 3, 18, 0.98));
+            clip-path: polygon(0 20%, 50% 65%, 100% 20%, 100% 100%, 0 100%);
+            z-index: 3;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, var(--envelope-crimson), #9a031e);
+            clip-path: polygon(0 20%, 50% 66%, 100% 20%);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 4;
+        }
+
+        .envelope-container.open .envelope-flap {
+            transform: rotateX(180deg) translateY(45px);
+            z-index: 1;
+        }
+
+        .heart-lock {
+            position: absolute;
+            top: 43%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            z-index: 5;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 4px 8px rgba(217,4,41,0.5)); }
+            50% { transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(0 4px 20px rgba(217,4,41,0.9)); }
+            100% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 4px 8px rgba(217,4,41,0.5)); }
+        }
+
+        .envelope-container.open .heart-lock {
+            opacity: 0; transform: translate(-50%, -100%) scale(0); pointer-events: none;
+        }
+
+        .giant-heart-letter {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0) scale(0.3);
+            width: 350px; 
+            height: 320px; 
+            background: radial-gradient(circle, #e60026 20%, #7a0010 100%);
+            clip-path: polygon(50% 18%, 68% 0%, 88% 0%, 100% 18%, 100% 45%, 50% 95%, 0% 45%, 0% 18%, 12% 0%, 32% 0%);
+            z-index: 2;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            align-items: center;
+            padding: 60px 35px 35px 35px; 
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s ease;
+            box-sizing: border-box;
+        }
+
+        .envelope-container.open .giant-heart-letter {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-270px) scale(1.15); 
+            z-index: 10;
+        }
+
+        .heart-inner-text {
+            color: #fff;
+            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 10px 0 0 0;
+        }
+
+        .unlock-btn {
+            background: #fff;
+            color: #9a031e;
+            border: none;
+            padding: 6px 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            margin-top: 15px;
+        }
+
+        .envelope-container.open .unlock-btn {
+            display: inline-block;
+            animation: fadeIn 0.5s forwards 0.9s;
+        }
+
+        .instruction-text {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 40px;
+        }
+
+        /* --- STAGE 3: Main Page Layout --- */
+        #main-content {
+            display: none; 
+            min-height: 100vh;
+            background: linear-gradient(135deg, #130a21 0%, #070712 100%);
+            padding: 20px;
+        }
+
+        .instruction-guide {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* --- 3D HEXAGONAL CAKE --- */
+        .cake-stage {
+            width: 100%;
+            height: 480px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            position: relative;
+        }
+
+        .cake-3d {
+            position: relative;
+            width: 200px;
+            height: 260px;
+            transform-style: preserve-3d;
+            transform: rotateX(-16deg) rotateY(0deg);
+            transition: transform 0.05s linear;
+        }
+
+        .cake-stand-hex {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            width: 290px;
+            height: 290px;
+            background: linear-gradient(135deg, #ffffff, #e2d4e7);
+            border: 3px solid var(--gold-pearl);
+            clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+            transform: translateX(-50%) rotateX(90deg);
+            box-shadow: 0 35px 70px var(--cake-shadow);
+            z-index: 1;
+        }
+
+        .hex-tier {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transform-style: preserve-3d;
+        }
+
+        .tier-bottom-hex { width: 220px; height: 120px; bottom: 0; z-index: 2; }
+        .tier-top-hex { width: 150px; height: 100px; bottom: 120px; z-index: 3; }
+
+        .hex-cap {
+            position: absolute;
+            left: 50%;
+            background: linear-gradient(135deg, var(--strawberry-frosting-light), #ffa2b6);
+            transform: translateX(-50%) rotateX(90deg);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            box-shadow: inset 0 0 35px rgba(255,255,255,0.6);
+        }
+        .tier-bottom-hex .hex-cap { width: 220px; height: 220px; top: -110px; }
+        .tier-top-hex .hex-cap { width: 150px; height: 150px; top: -75px; }
+
+        .hex-panel {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            box-sizing: border-box;
+            border-top: 5px solid var(--cream-glaze);
+            border-bottom: 4px solid var(--cream-glaze);
+            box-shadow: inset 0 0 25px rgba(255, 77, 109, 0.25), inset 0 -10px 20px rgba(0,0,0,0.1);
+        }
+
+        .hex-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 25px;
+            background: var(--cream-glaze);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 40%, 85% 90%, 70% 45%, 50% 100%, 35% 35%, 15% 85%, 0% 50%);
+            opacity: 0.95;
+        }
+
+        .hex-panel::after {
+            content: '🌸 • ✨ • 🌸';
+            position: absolute;
+            bottom: 12px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.65rem;
+            color: var(--gold-pearl);
+            opacity: 0.85;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .tier-bottom-hex .hex-panel {
+            width: 110px;
+            margin-left: -55px;
+            background: linear-gradient(to bottom, var(--strawberry-frosting-light), var(--strawberry-frosting-deep));
+        }
+        .tier-top-hex .hex-panel {
+            width: 75px;
+            margin-left: -37.5px;
+            background: linear-gradient(to bottom, #fff0f3, var(--strawberry-frosting-light));
+        }
+
+        .tier-bottom-hex .hp1 { transform: rotateY(0deg) translateZ(95px); }
+        .tier-bottom-hex .hp2 { transform: rotateY(60deg) translateZ(95px); filter: brightness(95%); }
+        .tier-bottom-hex .hp3 { transform: rotateY(120deg) translateZ(95px); filter: brightness(88%); }
+        .tier-bottom-hex .hp4 { transform: rotateY(180deg) translateZ(95px); filter: brightness(82%); }
+        .tier-bottom-hex .hp5 { transform: rotateY(240deg) translateZ(95px); filter: brightness(88%); }
+        .tier-bottom-hex .hp6 { transform: rotateY(300deg) translateZ(95px); filter: brightness(95%); }
+
+        .tier-top-hex .hp1 { transform: rotateY(0deg) translateZ(65px); }
+        .tier-top-hex .hp2 { transform: rotateY(60deg) translateZ(65px); filter: brightness(95%); }
+        .tier-top-hex .hp3 { transform: rotateY(120deg) translateZ(65px); filter: brightness(88%); }
+        .tier-top-hex .hp4 { transform: rotateY(180deg) translateZ(65px); filter: brightness(82%); }
+        .tier-top-hex .hp5 { transform: rotateY(240deg) translateZ(65px); filter: brightness(88%); }
+        .tier-top-hex .hp6 { transform: rotateY(300deg) translateZ(65px); filter: brightness(95%); }
+
+        /* --- CANDLE DESIGN --- */
+        .candle-holder-3d {
+            position: absolute;
+            width: 10px;
+            height: 85px;
+            left: 50%;
+            top: -42px;
+            transform: translateX(-50%) translateZ(0px);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .candle-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, #ffffff, #ffffff 5px, var(--heart-color) 5px, var(--heart-color) 10px);
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .candle-wick {
+            position: absolute;
+            top: -9px;
+            left: 4px;
+            width: 2px;
+            height: 9px;
+            background: #222;
+        }
+
+        .candle-flame {
+            position: absolute;
+            top: -34px;
+            left: -3px;
+            width: 16px;
+            height: 27px;
+            background: radial-gradient(circle at bottom, #ffffff 15%, #ffee55 40%, #ff4500 100%);
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            box-shadow: 0 0 30px #ff4500, 0 0 12px #ffea00;
+            animation: flicker 0.1s infinite alternate;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .candle-holder-3d.lit .candle-flame { opacity: 1; transform: scale(1); }
+
+        @keyframes flicker {
+            0% { transform: skewX(-2deg) scaleY(0.92); }
+            100% { transform: skewX(2deg) scaleY(1.08); }
+        }
+
+        /* --- SPARKLER FIREWORK PARTICLES --- */
+        .cracker-spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+        }
+
+        /* --- CREATIVE COUTURE WISHES OVERLAY (15 SECONDS) --- */
+        #wishes-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0518 0%, #030206 100%);
+            z-index: 9900;
+            display: none;
+            opacity: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        /* Ethereal Floating Ambient Particles */
+        .ambient-glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 117, 143, 0.15) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(20px);
+            animation: floatOrb 15s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-80px) scale(1.3); }
+        }
+
+        .dream-text-container {
+            max-width: 800px;
+            padding: 0 30px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .dream-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.8rem;
+            color: transparent;
+            background: linear-gradient(45deg, #fff, var(--strawberry-frosting-light), var(--heart-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            text-shadow: 0 0 35px rgba(255, 77, 109, 0.4);
+            margin-bottom: 35px;
+            opacity: 0;
+            animation: dreamReveal 1.5s forwards 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dream-paragraph {
+            font-size: 1.35rem;
+            line-height: 2;
+            color: #fff0f3;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: dreamReveal 1.8s forwards 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dream-footer {
+            margin-top: 45px;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            color: var(--matrix-pink);
+            opacity: 0;
+            animation: dreamReveal 1.2s forwards 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes dreamReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <canvas id="binary-canvas"></canvas>
+        <div id="countdown">5</div>
+    </div>
+
+    <div id="envelope-screen">
+        <div class="envelope-container" id="envelopeContainer" onclick="openEnvelope()">
+            <div class="envelope-wrapper">
+                <div class="envelope-flap"></div>
+                <div class="heart-lock">❤️</div>
+                
+                <div class="giant-heart-letter">
+                    <strong>Proverbs 9:11</strong>
+                    <p class="heart-inner-text">For by me your days will be multiplied, and years of life will be added to you.</p>
+                    <button class="unlock-btn" onclick="revealMainSite(event)">Unlock Surprise ➔</button>
+                </div>
+            </div>
+        </div>
+        <p class="instruction-text text-center" id="hintText">A special letter has arrived. Tap to open 👆🏿</p>
+    </div>
+
+    <div id="wishes-overlay">
+        <div class="ambient-glow-orb" style="width: 500px; height: 500px; top: -10%; left: -10%;"></div>
+        <div class="ambient-glow-orb" style="width: 400px; height: 400px; bottom: -5%; right: -5%; animation-delay: -5s;"></div>
+        
+        <div class="dream-text-container">
+            <h1 class="dream-title">Happy Birthday, Motho Waka 🎉</h1>
+            <p class="dream-paragraph">
+                May this milestone year unfold with spectacular layers of love, favor, and profound happiness. You are an answered prayer, structured with endless grace, and I am honored to celebrate the beautiful light you bring into the universe.
+            </p>
+            <div class="dream-footer">PREPARING MEMORY CAPTURE...</div>
+        </div>
+    </div>
+
+    <div id="main-content" class="text-center py-5">
+        <div class="container">
+            <div id="cake-interactive-universe">
+                <div>
+                    <p class="instruction-guide animate__animated animate__fadeInDown">
+                        Light the candle to launch your birthday celebration... 🕯️
+                    </p>
+                </div>
+                
+                <div class="cake-stage" id="cakeStage">
+                    <div class="cake-3d" id="cakeEngine3d">
+                        
+                        <div class="hex-tier tier-top-hex">
+                            <div class="hex-cap"></div>
+                            <div class="hex-panel hp1"></div>
+                            <div class="hex-panel hp2"></div>
+                            <div class="hex-panel hp3"></div>
+                            <div class="hex-panel hp4"></div>
+                            <div class="hex-panel hp5"></div>
+                            <div class="hex-panel hp6"></div>
+                        </div>
+
+                        <div class="candle-holder-3d" id="centerpieceCandle">
+                            <div class="candle-body"></div>
+                            <div class="candle-wick"></div>
+                            <div class="candle-flame"></div>
+                        </div>
+
+                        <div class="hex-tier tier-bottom-hex">
+                            <div class="hex-cap"></div>
+                            <div class="hex-panel hp1"></div>
+                            <div class="hex-panel hp2"></div>
+                            <div class="hex-panel hp3"></div>
+                            <div class="hex-panel hp4"></div>
+                            <div class="hex-panel hp5"></div>
+                            <div class="hex-panel hp6"></div>
+                        </div>
+
+                        <div class="cake-stand-hex"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const birthdayMusic = new Audio('choir.mp3');
+        birthdayMusic.loop = true; 
+        const notificationSound = new Audio('notification.mp3');
+
+        // --- 1. PINK MATRIX INTRO ---
+        const canvas = document.getElementById('binary-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+        const binary = "01"; const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 5, 16, 0.06)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ff758f'; ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = binary.charAt(Math.floor(Math.random() * binary.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) rainDrops[i] = 0;
+                rainDrops[i]++;
+            }
+        }
+        const matrixInterval = setInterval(drawMatrix, 30);
+
+        // --- 2. COUNTDOWN SEQUENCE ---
+        let count = 5;
+        const countdownEl = document.getElementById('countdown');
+        const introScreen = document.getElementById('intro-screen');
+        const envelopeScreen = document.getElementById('envelope-screen');
+        const mainContent = document.getElementById('main-content');
+
+        const countdownInterval = setInterval(() => {
+            count--;
+            
+            if (count === 2) {
+                notificationSound.play().catch(err => console.log(err));
+            }
+
+            if (count > 1) { 
+                countdownEl.innerText = count; 
+                pulseText(); 
+            } 
+            else if (count === 1) {
+                clearInterval(countdownInterval);
+                clearInterval(matrixInterval);
+                countdownEl.innerText = ""; 
+
+                setTimeout(() => {
+                    introScreen.style.opacity = 0;
+                    setTimeout(() => { 
+                        introScreen.style.display = 'none'; 
+                        envelopeScreen.style.display = 'flex'; 
+                        ambientHearts(); 
+                    }, 800);
+                }, 200);
+            }
+        }, 1000);
+
+        function pulseText() {
+            countdownEl.classList.remove('animate__animated', 'animate__pulse');
+            void countdownEl.offsetWidth; 
+            countdownEl.classList.add('animate__animated', 'animate__pulse');
+        }
+
+        function ambientHearts() {
+            setInterval(() => {
+                const h = document.createElement('div'); h.classList.add('bg-heart');
+                h.innerHTML = ['❤️', '💖', '✨', '🌹', '🎂'][Math.floor(Math.random() * 5)];
+                h.style.left = Math.random() * 100 + 'vw'; h.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                envelopeScreen.appendChild(h); setTimeout(() => h.remove(), 5000);
+            }, 400);
+        }
+
+        function openEnvelope() {
+            document.getElementById('envelopeContainer').classList.add('open');
+            document.getElementById('hintText').innerHTML = "Your heart letter has been assembled! ✨";
+            birthdayMusic.play().catch(err => console.log(err));
+        }
+
+        function revealMainSite(e) {
+            e.stopPropagation(); 
+            // MUSIC IS NOT PAUSED HERE ANYMORE — it plays continuously forward!
+            envelopeScreen.style.opacity = 0;
+            setTimeout(() => { 
+                envelopeScreen.style.display = 'none'; 
+                mainContent.style.display = 'block'; 
+                initializeCandleSystem(); 
+            }, 800);
+        }
+
+        // --- 3. CAKE AND ROTATION ---
+        function initializeCandleSystem() {
+            const centerpiece = document.getElementById('centerpieceCandle');
+            
+            centerpiece.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!centerpiece.classList.contains('lit')) {
+                    centerpiece.classList.add('lit');
+                    
+                    // Fire the fireworks show!
+                    executeFireworkExplosion();
+                    
+                    // Display Wishes Overlay after explosion peak (1 second delay)
+                    setTimeout(() => {
+                        const wishesOverlay = document.getElementById('wishes-overlay');
+                        wishesOverlay.style.display = 'flex';
+                        setTimeout(() => wishesOverlay.style.opacity = 1, 50);
+                        
+                        // Slowly fade the entire page when hitting 12 seconds
+                        setTimeout(() => {
+                            document.body.classList.add('fade-out-page');
+                        }, 12000);
+
+                        // Complete redirection at exactly 15 seconds
+                        setTimeout(() => {
+                            window.location.href = 'heart.html';
+                        }, 15000);
+
+                    }, 1000);
+                }
+            });
+
+            setupRotation();
+        }
+
+        function setupRotation() {
+            const cake = document.getElementById('cakeEngine3d');
+            let angle = 0;
+            setInterval(() => {
+                angle += 0.4;
+                cake.style.transform = `rotateX(-16deg) rotateY(${angle}deg)`;
+            }, 30);
+        }
+
+        // --- 4. HIGH-DENSITY FIREWORK ENGINE ---
+        function executeFireworkExplosion() {
+            const targetContainer = document.body;
+            const particleCount = 120; 
+            const colors = ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd700', '#ffffff', '#ff0055'];
+            
+            const originX = window.innerWidth / 2;
+            const originY = window.innerHeight / 2 - 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const spark = document.createElement('div');
+                spark.classList.add('cracker-spark');
+                
+                spark.style.left = originX + 'px';
+                spark.style.top = originY + 'px';
+                spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                spark.style.boxShadow = `0 0 12px ${spark.style.backgroundColor}, 0 0 20px #fff`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 12 + 4; 
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                targetContainer.appendChild(spark);
+                
+                let currX = originX;
+                let currY = originY;
+                let opacity = 1;
+                
+                const moveSpark = setInterval(() => {
+                    currX += vx;
+                    currY += vy + 0.2; 
+                    opacity -= 0.015;  
+                    
+                    spark.style.left = currX + 'px';
+                    spark.style.top = currY + 'px';
+                    spark.style.opacity = opacity;
+                    
+                    if (opacity <= 0) {
+                        clearInterval(moveSpark);
+                        spark.remove();
+                    }
+                }, 20);
+            }
+        }
+    </script>
+</body>
+</html>

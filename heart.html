@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 23rd Birthday My Love!</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Simple styling for the music control button */
+        .music-btn {
+            background: #ff4d6d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .music-btn:hover {
+            background: #ff758f;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <audio id="birthdaySong" src="birthday.mp3" loop preload="auto"></audio>
+
+    <div class="wrapper">
+        <div class="header-banner">
+            <h1>Happy 23rd Birthday, Sthandwa sam'❤️</h1>
+            <p>A collection of moments that stole my heart. Click to read.</p>
+            <button id="musicToggle" class="music-btn">🎵 Play Birthday Music</button>
+        </div>
+
+        <div class="heart-container">
+            <div class="heart-cell pos-1-2" data-message="To the most beautiful girl in the world, happy 23rd birthday! 💖"><img src="images/img1.jpeg" alt="Photo 1"></div>
+            <div class="heart-cell pos-1-3" data-message="Every single day with you feels like a dream come true. ✨"><img src="images/img2.jpeg" alt="Photo 2"></div>
+            <div class="heart-cell pos-1-5" data-message="Cheers to 23 years of your incredible light in this world. 🥂"><img src="images/img3.jpeg" alt="Photo 3"></div>
+            <div class="heart-cell pos-1-6" data-message="Your smile is my absolute favorite thing in the universe. 😍"><img src="images/img4.jpeg" alt="Photo 4"></div>
+            
+            <div class="heart-cell pos-2-1" data-message="I love the way you laugh at my terrible jokes. 😂💗"><img src="images/img5.jpeg" alt="Photo 5"></div>
+            <div class="heart-cell pos-2-2" data-message="Growing and learning beside you is my greatest adventure. 🗺️"><img src="images/img6.jpeg" alt="Photo 6"></div>
+            <div class="heart-cell pos-2-3" data-message="You look breathtakingly gorgeous in this picture! 🔥"><img src="images/img7.jpeg" alt="Photo 7"></div>
+            <div class="heart-cell pos-2-4" data-message="Chapter 23 looks so, so incredibly good on you. 🎂"><img src="images/img8.JPG" alt="Photo 8"></div>
+            <div class="heart-cell pos-2-5" data-message="Thank you for being my peace, my home, and my best friend. 🏠❤️"><img src="images/img9.jpeg" alt="Photo 9"></div>
+            <div class="heart-cell pos-2-6" data-message="My love for you grows deeper with every passing second. 🌊"><img src="images/img10.jpeg" alt="Photo 10"></div>
+            <div class="heart-cell pos-2-7" data-message="Forever wouldn't be long enough with you. ♾️"><img src="images/img11.jpeg" alt="Photo 11"></div>
+
+            <div class="heart-cell pos-3-1" data-message="Still remember this day like it was yesterday! 📸"><img src="images/img12.jpeg" alt="Photo 12"></div>
+            <div class="heart-cell pos-3-2" data-message="No matter where life takes us, my heart belongs to you. 🎯"><img src="images/img13.jpeg" alt="Photo 13"></div>
+            <div class="heart-cell pos-3-3" data-message="You are the kindest, smartest soul I have ever known. 🧠🌹"><img src="images/Img14.JPG" alt="Photo 14"></div>
+            <div class="heart-cell pos-3-4" data-message="The absolute center of my universe. ☀️"><img src="images/Img15.JPG" alt="Photo 15"></div>
+            <div class="heart-cell pos-3-5" data-message="You make everything in life twice as beautiful. 🌸"><img src="images/img16.JPG" alt="Photo 16"></div>
+            <div class="heart-cell pos-3-6" data-message="Holding your hand is still my favorite place to be. 🤝❤️"><img src="images/Img17.jpg" alt="Photo 17"></div>
+            <div class="heart-cell pos-3-7" data-message="Falling for you was the easiest thing I've ever done. 🍂"><img src="images/Img18.JPG" alt="Photo 18"></div>
+
+            <div class="heart-cell pos-4-2" data-message="I hope 23 brings you all the magic you deserve. 🪄🎉"><img src="images/Img19.JPG" alt="Photo 19"></div>
+            <div class="heart-cell pos-4-3" data-message="You inspire me to be a better person every single day. 💪❤️"><img src="images/Img20.JPG" alt="Photo 20"></div>
+            <div class="heart-cell pos-4-4" data-message="My favorite view will always be you looking back at me. 👀💗"><img src="images/Img21.JPG" alt="Photo 21"></div>
+            <div class="heart-cell pos-4-5" data-message="May your year be filled with endless laughter and joy. 🎈"><img src="images/Img22.JPG" alt="Photo 22"></div>
+            <div class="heart-cell pos-4-6" data-message="Through thick and thin, I am always in your corner. 🥊❤️"><img src="images/Img23.JPG" alt="Photo 23"></div>
+
+            <div class="heart-cell pos-5-3" data-message="Counting my blessings, and you are always at the top. 💯"><img src="images/Img24.JPG" alt="Photo 24"></div>
+            <div class="heart-cell pos-5-4" data-message="Here's to making countless more memories together! 🥂💫"><img src="images/Img25.JPG" alt="Photo 25"></div>
+            <div class="heart-cell pos-5-5" data-message="You are my today, my tomorrow, and my forever. 🔐❤️"><img src="images/Img26.JPG" alt="Photo 26"></div>
+
+            <div class="heart-cell pos-6-4" data-message="Happy 23rd Birthday! I love you infinitely. ❤️🎂🎉"><img src="images/Img27.JPG" alt="Photo 27"></div>
+        </div>
+    </div>
+
+    <div class="overlay-modal" id="photoModal">
+        <div class="close-hitbox"></div>
+        <div class="modal-card-container">
+            <div class="modal-card-inner">
+                
+                <div class="card-side side-front">
+                    <img id="modalImg" src="" alt="Memory preview">
+                    <div class="tap-hint">Tap card to read note ✨</div>
+                </div>
+
+                <div class="card-side side-back">
+                    <div class="letter-deco">23 💖</div>
+                    <div class="letter-body">
+                        <p id="modalText"></p>
+                    </div>
+                    <button class="close-btn-action">Return to Heart</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cells = document.querySelectorAll('.heart-cell');
+        const modal = document.getElementById('photoModal');
+        const cardInner = document.querySelector('.modal-card-inner');
+        const modalImg = document.getElementById('modalImg');
+        const modalText = document.getElementById('modalText');
+        const closeHitbox = document.querySelector('.close-hitbox');
+        const closeBtnAction = document.querySelector('.close-btn-action');
+        
+        // Music logic components
+        const song = document.getElementById('birthdaySong');
+        const musicToggleBtn = document.getElementById('musicToggle');
+        let musicStarted = false;
+
+        function startMusic() {
+            if (!musicStarted) {
+                song.muted = false; // Override potential default muted blocks
+                song.play()
+                    .then(() => {
+                        musicStarted = true;
+                        musicToggleBtn.textContent = "⏸️ Pause Music";
+                    })
+                    .catch(error => console.log("Audio play blocked: ", error));
+            } else {
+                if (song.paused) {
+                    song.play();
+                    musicToggleBtn.textContent = "⏸️ Pause Music";
+                } else {
+                    song.pause();
+                    musicToggleBtn.textContent = "▶️ Play Music";
+                }
+            }
+        }
+
+        // Trigger via explicitly clicking the button
+        musicToggleBtn.addEventListener('click', startMusic);
+
+        // Fallback trigger: clicking any heart picture opens modal AND attempts to start music
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                const img = cell.querySelector('img');
+                const msg = cell.getAttribute('data-message');
+                
+                modalImg.src = img.src;
+                modalText.textContent = msg;
+                modal.classList.add('active');
+
+                // Try playing if it hasn't started yet
+                if (!musicStarted) {
+                    startMusic();
+                }
+            });
+        });
+
+        // Toggle the flip logic on card click
+        cardInner.addEventListener('click', (e) => {
+            if(e.target.classList.contains('close-btn-action')) return;
+            cardInner.classList.toggle('flipped');
+        });
+
+        // Function to securely close modal and reset state
+        function closeModal() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                cardInner.classList.remove('flipped');
+            }, 400);
+        }
+
+        closeHitbox.addEventListener('click', closeModal);
+        closeBtnAction.addEventListener('click', closeModal);
+    </script>
+</body>
+</html>
