@@ -1,6 +1,7 @@
 :root {
-    --card-size: 85px;
-    --gap-size: 10px;
+    /* Responsive sizing matrix using clamp: Minimum 42px, scales smoothly, Max 85px */
+    --card-size: clamp(42px, 11vw, 85px);
+    --gap-size: clamp(4px, 1.2vw, 10px);
     --accent: #ff4b5c;
     --accent-glow: rgba(255, 75, 92, 0.4);
     --surface: rgba(22, 21, 26, 0.7);
@@ -52,20 +53,24 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px 15px; /* Tighter padding for mobile screen breathing room */
+    margin: 0 auto;
 }
 
 /* Banner Styling */
 .header-banner {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: clamp(20px, 5vw, 35px);
     opacity: 0;
     transform: translateY(-30px);
     animation: entranceFade 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    padding: 0 10px;
 }
 
 .header-banner h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.6rem, 6vw, 2.5rem);
     font-weight: 700;
     letter-spacing: -0.5px;
     margin: 0 0 10px 0;
@@ -76,8 +81,9 @@ body {
 
 .header-banner p {
     color: #8e8d99;
-    font-size: 1.05rem;
+    font-size: clamp(0.9rem, 3.5vw, 1.05rem);
     margin: 0;
+    line-height: 1.4;
 }
 
 /* Grid Matrix Container */
@@ -87,6 +93,8 @@ body {
     grid-template-rows: repeat(6, var(--card-size));
     gap: var(--gap-size);
     perspective: 1000px;
+    justify-content: center;
+    width: 100%;
 }
 
 /* Cell Architecture & Micro-Interactions */
@@ -95,7 +103,7 @@ body {
     height: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: clamp(8px, 2vw, 16px);
     background-color: var(--surface);
     border: 1px solid var(--border);
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
@@ -123,8 +131,9 @@ body {
     pointer-events: none;
 }
 
+/* Hover scales safely on desktops, behaves fine on mobile touch */
 .heart-cell:hover {
-    transform: scale(1.22) translateZ(20px) !important;
+    transform: scale(1.15) translateZ(20px) !important;
     z-index: 20;
     border-color: var(--accent);
     box-shadow: 0 15px 35px var(--accent-glow), 0 0 0 4px rgba(255,75,92,0.15);
@@ -175,6 +184,7 @@ body {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 20px; /* Safe zones on notch displays */
 }
 
 .overlay-modal.active {
@@ -185,16 +195,17 @@ body {
 .close-hitbox {
     position: absolute;
     inset: 0;
-    background-color: rgba(6, 5, 8, 0.65);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    background-color: rgba(6, 5, 8, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 /* Card Theater Window viewport */
 .modal-card-container {
     position: relative;
-    width: 380px;
-    height: 500px;
+    width: 100%;
+    max-width: 340px; /* Elegant, streamlined layout width */
+    height: 460px;   /* Safe aspect ratio for short mobile viewports */
     perspective: 1600px;
     z-index: 10;
 }
@@ -218,9 +229,9 @@ body {
     inset: 0;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    border-radius: 28px;
+    border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     overflow: hidden;
 }
 
@@ -242,9 +253,10 @@ body {
     backdrop-filter: blur(8px);
     padding: 8px 18px;
     border-radius: 30px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #fff;
     border: 1px solid rgba(255,255,255,0.1);
+    white-space: nowrap;
     animation: bouncepulse 2s infinite ease-in-out;
 }
 
@@ -255,18 +267,18 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 35px;
+    padding: 25px;
     color: #fff;
 }
 
 .letter-deco {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 800;
     text-align: left;
     background: linear-gradient(45deg, var(--accent), #ff758c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .letter-body {
@@ -274,12 +286,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
+    margin: 15px 0;
+    overflow-y: auto; /* Gracefully handles long text notes without layout breaks */
+    padding-right: 4px;
 }
 
 .letter-body p {
-    font-size: 1.35rem;
-    line-height: 1.7;
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+    line-height: 1.6;
     font-weight: 400;
     color: #f1f0f5;
     text-align: center;
@@ -289,11 +303,11 @@ body {
 .close-btn-action {
     background: linear-gradient(90deg, var(--accent) 0%, #ff5e70 100%);
     border: none;
-    padding: 14px;
-    border-radius: 14px;
+    padding: 12px;
+    border-radius: 12px;
     color: white;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(255, 75, 92, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -326,13 +340,13 @@ body {
     50% { transform: translateX(-50%) translateY(-6px); opacity: 1; }
 }
 
-/* Viewport Scale Mechanics */
-@media (max-width: 680px) {
-    :root {
-        --card-size: 12.5vw;
-        --gap-size: 1.5vw;
+/* High-Yield Mobile Optimization Overrides */
+@media (max-width: 500px) {
+    .modal-card-container {
+        height: min(440px, 75vh); /* Adapts to short mobile screens */
     }
-    .header-banner h1 { font-size: 1.6rem; }
-    .modal-card-container { width: 85vw; height: 60vh; }
-    .letter-body p { font-size: 1.1rem; }
+    .letter-body p {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
 }

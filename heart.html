@@ -182,7 +182,7 @@
             <div class="heart-cell pos-2-4" data-index="7" data-message="Thank you for being my peace, my home, and my best friend. "><img src="images/img8.JPG" alt="Photo 8"></div>
             <div class="heart-cell pos-2-5" data-index="8" data-message="This picture is proof that you never give up on your dreams. Keep chasing them because the world needs everything you have to offer."><img src="images/img9.jpeg" alt="Photo 9"></div>
             <div class="heart-cell pos-2-6" data-index="9" data-message="This picture has been my favorite from the moment I first saw it."><img src="images/img10.jpeg" alt="Photo 10"></div>
-            <div class="heart-cell pos-2-7" data-index="10" data-message="I hope you see yourself the way I see you, extraordinary in every way."><img src="images/img11.jpeg" alt="Photo 11"></div>
+            <div class="heart-cell pos-2-7" data-index="10" data-message="May this birthday mark the beginning of a season filled with healing, answered prayers, and happiness that never leaves your side. I can’t promise that life will always be easy, but I do promise that as long as I’m able, you’ll never have to face it alone."><img src="images/img11.jpeg" alt="Photo 11"></div>
 
             <div class="heart-cell pos-3-1" data-index="11" data-message="Still remember this day like it was yesterday!"><img src="images/img12.jpeg" alt="Photo 12"></div>
             <div class="heart-cell pos-3-2" data-index="12" data-message="Every time I see this picture, I'm taken back to the excitement of our first date. Little did I know that one day I'd be celebrating the birthday of the woman who would become my greatest blessing."><img src="images/img13.jpeg" alt="Photo 13"></div>
@@ -234,116 +234,112 @@
     </div>
 
     <script>
-        const cells = Array.from(document.querySelectorAll('.heart-cell'));
-        const modal = document.getElementById('photoModal');
-        const cardInner = document.querySelector('.modal-card-inner');
-        const modalImg = document.getElementById('modalImg');
-        const modalText = document.getElementById('modalText');
-        const closeHitbox = document.querySelector('.close-hitbox');
-        const closeBtnAction = document.querySelector('.close-btn-action');
-        const modalCloseX = document.getElementById('modalCloseX');
+    const cells = Array.from(document.querySelectorAll('.heart-cell'));
+    const modal = document.getElementById('photoModal');
+    const cardInner = document.querySelector('.modal-card-inner');
+    const modalImg = document.getElementById('modalImg');
+    const modalText = document.getElementById('modalText');
+    const closeHitbox = document.querySelector('.close-hitbox');
+    const closeBtnAction = document.querySelector('.close-btn-action');
+    const modalCloseX = document.getElementById('modalCloseX');
+    
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    let currentActiveIndex = 0;
+
+    // --- Music Initialization ---
+    const song = document.getElementById('birthdaySong');
+
+    // Function to handle the music
+    function startMusic() {
+        // Attempt to play the song
+        const playPromise = song.play();
         
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        let currentActiveIndex = 0;
-
-        // Music initialization components
-        const song = document.getElementById('birthdaySong');
-        let musicStarted = false;
-
-        function startMusic() {
-            if (musicStarted) return;
-            
-            song.muted = false; 
-            song.play()
-                .then(() => {
-                    musicStarted = true;
-                    // Clean up interactions once playing successfully
-                    document.removeEventListener('click', triggerMusicOnInteraction);
-                    document.removeEventListener('touchstart', triggerMusicOnInteraction);
-                })
-                .catch(error => {
-                    console.log("Autoplay context initialization waiting for screen interaction.");
-                });
-        }
-
-        // Global fallback interface function
-        function triggerMusicOnInteraction() {
-            startMusic();
-        }
-
-        // Handle page loads / refreshes smoothly
-        window.addEventListener('load', () => {
-            startMusic();
-            
-            // Set fallback trigger parameters globally across document workspace
-            document.addEventListener('click', triggerMusicOnInteraction, { once: true });
-            document.addEventListener('touchstart', triggerMusicOnInteraction, { once: true });
-        });
-
-        function loadMemoryData(index) {
-            cardInner.classList.remove('flipped');
-            const cell = cells[index];
-            if (!cell) return;
-
-            const img = cell.querySelector('img');
-            const msg = cell.getAttribute('data-message');
-            
-            modalImg.style.opacity = 0;
-            setTimeout(() => {
-                modalImg.src = img.src;
-                modalText.textContent = msg;
-                modalImg.style.opacity = 1;
-            }, 150);
-
-            currentActiveIndex = index;
-        }
-
-        cells.forEach((cell, idx) => {
-            cell.addEventListener('click', () => {
-                loadMemoryData(idx);
-                modal.classList.add('active');
-                startMusic(); // Keep backup triggers inside card taps
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Autoplay started successfully!
+                document.removeEventListener('click', startMusic);
+                document.removeEventListener('touchstart', startMusic);
+            }).catch(error => {
+                // Autoplay was blocked by the browser. 
+                // The music will start on the user's first click/tap instead.
+                console.log("Waiting for interaction to play audio...");
             });
-        });
-
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            let nextIndex = currentActiveIndex + 1;
-            if (nextIndex >= cells.length) nextIndex = 0;
-            loadMemoryData(nextIndex);
-        });
-
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            let prevIndex = currentActiveIndex - 1;
-            if (prevIndex < 0) prevIndex = cells.length - 1;
-            loadMemoryData(prevIndex);
-        });
-
-        cardInner.addEventListener('click', (e) => {
-            if(e.target.classList.contains('close-btn-action')) return;
-            cardInner.classList.toggle('flipped');
-        });
-
-        function closeModal() {
-            modal.classList.remove('active');
-            setTimeout(() => {
-                cardInner.classList.remove('flipped');
-            }, 400);
         }
+    }
 
-        closeHitbox.addEventListener('click', closeModal);
-        closeBtnAction.addEventListener('click', closeModal);
-        modalCloseX.addEventListener('click', closeModal);
+    // Try to play as soon as the HTML is loaded
+    document.addEventListener("DOMContentLoaded", startMusic);
+    
+    // Fallback: If blocked, play on the very first click or tap anywhere on the page
+    document.addEventListener('click', startMusic, { once: true });
+    document.addEventListener('touchstart', startMusic, { once: true });
 
-        document.addEventListener('keydown', (e) => {
-            if (!modal.classList.contains('active')) return;
-            if (e.key === 'ArrowRight') nextBtn.click();
-            else if (e.key === 'ArrowLeft') prevBtn.click();
-            else if (e.key === 'Escape') closeModal();
+
+    // --- Photo Gallery & Modal Logic ---
+    function loadMemoryData(index) {
+        cardInner.classList.remove('flipped');
+        const cell = cells[index];
+        if (!cell) return;
+
+        const img = cell.querySelector('img');
+        const msg = cell.getAttribute('data-message');
+        
+        modalImg.style.opacity = 0;
+        setTimeout(() => {
+            modalImg.src = img.src;
+            modalText.textContent = msg;
+            modalImg.style.opacity = 1;
+        }, 150);
+
+        currentActiveIndex = index;
+    }
+
+    cells.forEach((cell, idx) => {
+        cell.addEventListener('click', () => {
+            loadMemoryData(idx);
+            modal.classList.add('active');
+            startMusic(); // Backup trigger inside card taps
         });
-    </script>
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let nextIndex = currentActiveIndex + 1;
+        if (nextIndex >= cells.length) nextIndex = 0;
+        loadMemoryData(nextIndex);
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let prevIndex = currentActiveIndex - 1;
+        if (prevIndex < 0) prevIndex = cells.length - 1;
+        loadMemoryData(prevIndex);
+    });
+
+    cardInner.addEventListener('click', (e) => {
+        if(e.target.classList.contains('close-btn-action')) return;
+        cardInner.classList.toggle('flipped');
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            cardInner.classList.remove('flipped');
+        }, 400);
+    }
+
+    closeHitbox.addEventListener('click', closeModal);
+    closeBtnAction.addEventListener('click', closeModal);
+    modalCloseX.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'ArrowRight') nextBtn.click();
+        else if (e.key === 'ArrowLeft') prevBtn.click();
+        else if (e.key === 'Escape') closeModal();
+    });
+</script>
 </body>
 </html>
