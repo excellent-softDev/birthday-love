@@ -350,3 +350,27 @@ body {
         line-height: 1.5;
     }
 }
+
+/* --- Mobile Layout Fix for Navigation Arrows --- */
+@media (max-width: 500px) {
+    /* Push arrows outward slightly and adjust vertical positioning if needed */
+    .nav-arrow.prev { 
+        left: -42px !important; 
+    }
+    .nav-arrow.next { 
+        right: -42px !important; 
+    }
+    
+    /* Ensure the modal window leaves enough side room for the arrows */
+    .modal-card-container {
+        width: 76vw !important; /* Shrinks container width slightly so arrows have room on the left/right */
+    }
+
+    /* Shrink arrows slightly so they don't look bulky on small screens */
+    .nav-arrow {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 0.95rem !important;
+        background: rgba(255, 255, 255, 0.95) !important; /* Pop cleanly against dark overlay */
+    }
+}
